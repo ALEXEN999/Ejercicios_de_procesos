@@ -1,5 +1,8 @@
 package com.company.Tejedores;
 
+
+import static com.company.Tejedores.ColouredSystemOutPrintln.*;
+
 public class Ensamblador extends Thread {
 
     Cesta cestaMangas;
@@ -16,12 +19,12 @@ public class Ensamblador extends Thread {
         super.run();
         for (;;){
             cestaMangas.quitarPiezas();
-
-            System.out.println("Quedan -> " + cestaMangas.countMangas + "Mangas");
+            cestaMangas.quitarPiezas();
             cestaCuerpos.quitarPiezas();
             try {
-                System.out.println("El ensamblador de "+getName()+" ha cogido "+getName());
-                Thread.sleep(2000);
+                System.out.println(ANSI_RED+"El ensamblador de "+getName()+" ha cogido "+getName()+" de la cesta"+ANSI_RESET);
+                System.out.println();
+                Thread.sleep((long)(Math.random() * 3500));
             }catch (InterruptedException e){
                 e.printStackTrace();
             }

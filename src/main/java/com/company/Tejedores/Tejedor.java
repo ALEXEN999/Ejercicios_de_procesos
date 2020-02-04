@@ -1,14 +1,13 @@
 package com.company.Tejedores;
 
+import static com.company.Tejedores.ColouredSystemOutPrintln.*;
+
 public class Tejedor extends Thread {
     Cesta cesta;
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_CYAN = "\u001B[36m";
+    String pieza;
 
     public Tejedor(Cesta cesta, String pieza) {
-        super(pieza);
+        this.pieza = pieza;
         this.cesta = cesta;
     }
 
@@ -17,15 +16,13 @@ public class Tejedor extends Thread {
         super.run();
         for (;;){
             try {
-                Thread.sleep(3000);
+                Thread.sleep((long)(Math.random() * 3000));
 
-                cesta.agregarPiezas();
-                System.out.println(ANSI_RED+"El tejedor de "+getName()+" ha agregado "+getName()+ANSI_RESET);
-                System.out.println();
-                System.out.println(ANSI_GREEN+"Ahora hay "+ cesta.countMangas+ " Mangas"+ANSI_RESET);
-                System.out.println("Ahora hay "+ cesta.countCuerpo+" Cuerpos");
-                System.out.println();
-                Thread.sleep(1000);
+                    cesta.agregarPiezas();
+                    System.out.println(ANSI_YELLOW+"El tejedor de "+pieza+" ha agregado a la cesta "+pieza+ANSI_RESET);
+                    System.out.println();
+
+
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
