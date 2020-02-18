@@ -6,7 +6,6 @@ public class Ascensor {
 
     int countPersona = 0;
 
-    boolean lleno = false;
 
     public Ascensor(int plantaActualAscensor) {
         this.plantaActualAscensor = plantaActualAscensor;
@@ -19,7 +18,7 @@ public class Ascensor {
 
     public synchronized void subirse(int plantaActual){
                 try {
-                        while (countPersona == limitePersonas && plantaActual!=this.plantaActualAscensor) wait();
+                        while (countPersona == limitePersonas || plantaActual != plantaActualAscensor) wait();
                         countPersona++;
                         notifyAll();
 
@@ -32,7 +31,7 @@ public class Ascensor {
     public synchronized void bajarse(int plantaDestino) {
 
             try {
-                while (countPersona == limitePersonas && plantaDestino !=this.plantaActualAscensor) wait();
+                while (countPersona == limitePersonas || plantaDestino != plantaActualAscensor) wait();
                 countPersona--;
                 notifyAll();
             } catch (InterruptedException e) {

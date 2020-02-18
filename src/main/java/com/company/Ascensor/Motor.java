@@ -5,6 +5,7 @@ public class Motor extends Thread{
     Ascensor ascensor;
     int plantaMax;
 
+    int countVueltasVacias = 0;
     Nivel nivel;
     enum Nivel{
         SUBIENDO,
@@ -17,16 +18,10 @@ public class Motor extends Thread{
         nivel = Nivel.SUBIENDO;
     }
 
-//    public static void main(String[] args) {
-//        for (;;){
-//
-//        }
-//    }
-
     @Override
     public void run() {
         super.run();
-        for (;;){
+        while (countVueltasVacias != 2){
             switch (nivel){
                 case SUBIENDO:
                     try {
@@ -36,7 +31,7 @@ public class Motor extends Thread{
                             } else {
                                 ascensor.plantaActualAscensor++;
                                 ascensor.notificar();
-                                System.out.println(ascensor.plantaActualAscensor);
+//                                System.out.println(ascensor.plantaActualAscensor);
 
                                 Thread.sleep((long)(Math.random() * 3000));
                             }
@@ -44,6 +39,7 @@ public class Motor extends Thread{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    break;
                 case BAJANDO:
                     try {
                         if(ascensor.plantaActualAscensor>=0){
@@ -52,7 +48,7 @@ public class Motor extends Thread{
                             } else {
                                 ascensor.plantaActualAscensor--;
                                 ascensor.notificar();
-                                System.out.println(ascensor.plantaActualAscensor);
+//                                System.out.println(ascensor.plantaActualAscensor);
 
                                 Thread.sleep((long)(Math.random() * 3000));
                             }
@@ -60,7 +56,13 @@ public class Motor extends Thread{
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    break;
+
             }
+            if (ascensor.countPersona==0){
+                countVueltasVacias++;
+            }
+
         }
     }
 }
